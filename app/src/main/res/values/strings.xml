@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">ABBYY Test task</string>
+    <!-- MainActivity-->
+    <string name="main_btn_send_word">Получить перевод</string>
+    <string name="main_request_stub">Перевод вашего слова появится здесь</string>
+    <string name="main_request_empty">По вашему запросу ничего не найдено</string>
+
+    <!--HistoryActivity -->
+    <string name="history_empty">Поисковая история пуста</string>
+    <string name="history_clean">Очистить историю</string>
+
+    <!-- Hints -->
+    <string name="hint_insert_word">Введите слово</string>
+
+    <!-- Errors -->
+    <string name="error_input_empty">Строка не может быть пустой</string>
+    <string name="error_input_alpha">Строка может содержать только символы алфавита a-z</string>
+
+    <!-- Menu -->
+    <!-- Toolbar -->
+    <string name="menu_toolbar_history">История запросов</string>
+</resources>
