@@ -98,6 +98,7 @@ public class AbbyyUtils {
     }
 
     public static void createParagraphString(Context context, LinearLayout container, ArticleNode paragraphNode) {
+        container.removeAllViews();
         for (int i = 0; i < paragraphNode.getInnerNodes().size(); i++) {
             ArticleNode innerNode = paragraphNode.getInnerNodes().get(i);
 
