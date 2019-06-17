@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.abbyy.task01.AbbyyApp;
 import com.abbyy.task01.R;
+import com.abbyy.task01.adapter.TranslationAdapter;
 import com.abbyy.task01.beans.ArticleModel;
 import com.abbyy.task01.beans.ArticleNode;
 import com.abbyy.task01.contract.MainActivityContract;
@@ -20,16 +21,20 @@ import com.abbyy.task01.presenter.MainActivityPresenter;
 import com.abbyy.task01.utils.AbbyyUtils;
 import com.abbyy.task01.utils.KeyboardUtils;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
-
-import static com.abbyy.task01.utils.AbbyyUtils.createParagraphString;
+import static com.abbyy.task01.utils.AbbyyUtils.fillTopParagraphLayout;
+import static com.abbyy.task01.utils.AbbyyUtils.isNodeBelongToType;
 import static com.abbyy.task01.utils.ValidationUtils.isAlpha;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> implements MainActivityContract {
 
     @Inject
     MainActivityPresenter presenter;
+
+    private TranslationAdapter translationAdapter = new TranslationAdapter(new ArrayList<>());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements M
         AbbyyApp.getInjector().inject(this);
         presenter.setView(this);
         presenter.getBearedToken();
+
+        binding.rvTranslation.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        binding.rvTranslation.setAdapter(translationAdapter);
 
         binding.btnSend.setOnClickListener(v -> {
             String inputWord = binding.inputWord.getText().toString();
@@ -67,30 +75,34 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements M
         binding.txtEmptyStub.setVisibility(View.GONE);
 
         binding.txtTitle.setText(modelList.getTitle());
-        binding.rvTranslation.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
 
-        ArticleNode paragraphNode = null;
+        ArrayList<ArticleNode> paragraphNodes = new ArrayList<>();
+        ArticleNode listNode = null;
+
+        //Finding all Paragraph type nodes inside on top level of Body
+        //to fill top layout(lytParagraph) with transcriptions, sounds icons, e.t.c
+        //At the same time we looking for node with List type. I suggest it's only one inside body.
         for (ArticleNode node : modelList.getBody()) {
-            if (node.getNodeType().equals(AbbyyUtils.TYPE_STRING_PARAGRAPH)) {
-                paragraphNode = node;
+            if (isNodeBelongToType(node, AbbyyUtils.TYPE_PARAGRAPH)) {
+                paragraphNodes.add(node);
+            }
+            if (isNodeBelongToType(node, AbbyyUtils.TYPE_LIST)) {
+                listNode = node;
             }
         }
 
-        if (paragraphNode != null) {
+        if (!paragraphNodes.isEmpty()) {
             binding.lytParagraph.setVisibility(View.VISIBLE);
-            createParagraphString(this, binding.lytParagraph, paragraphNode);
+            fillTopParagraphLayout(this, binding.lytParagraph, paragraphNodes);
         } else {
             binding.lytParagraph.setVisibility(View.GONE);
         }
 
-
-//                modelList.getTitleMarkup()
-//        ArrayList<ArticleNode> body = (ArrayList<ArticleNode>) modelList.getBody();
-//        ArrayList<ArticleNode> listTypeNodes = getListTypeNodes(body);
-
-//        ArrayList<ArticleNode> listItemNodes = (ArrayList<ArticleNode>) listNode.getItems();
-
-//        binding.rvTranslation.setAdapter(new TranslationAdapter(res));
+        if (listNode != null && listNode.getItems() != null && !listNode.getItems().isEmpty()) {
+            translationAdapter.setData((ArrayList<ArticleNode>) listNode.getItems());
+        } else {
+            translationAdapter.clear();
+        }
     }
 
     private boolean wordValidation(String word) {

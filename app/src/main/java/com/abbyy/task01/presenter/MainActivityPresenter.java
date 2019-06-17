@@ -30,6 +30,7 @@ public class MainActivityPresenter {
     }
 
     public void getBearedToken() {
+        Timber.e(storage.getBearerToken());
         api.get("Basic M2YzZTQ0YmMtN2Y0NC00MmRkLWIxM2UtMmRhZDhlMTY3OTc1OmNmMWM4NzI1ZjgxZjQ2NThhZDExOTk3YWI4ZjAzMjQ1")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

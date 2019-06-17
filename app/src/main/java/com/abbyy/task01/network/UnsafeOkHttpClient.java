@@ -1,15 +1,13 @@
 package com.abbyy.task01.network;
 
-import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-import javax.security.cert.CertificateException;
 
 import okhttp3.OkHttpClient;
 
+//I need this because of Lingvolive certificate expired at 17.06.18
 public class UnsafeOkHttpClient {
     public static OkHttpClient getUnsafeOkHttpClient() {
         try {
@@ -42,8 +40,7 @@ public class UnsafeOkHttpClient {
             builder.sslSocketFactory(sslSocketFactory, (X509TrustManager) trustAllCerts[0]);
             builder.hostnameVerifier((hostname, session) -> true);
 
-            OkHttpClient okHttpClient = builder.build();
-            return okHttpClient;
+            return builder.build();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

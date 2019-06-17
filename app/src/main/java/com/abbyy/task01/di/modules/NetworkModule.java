@@ -73,7 +73,6 @@ public class NetworkModule {
 
     private LingvoApi lingvoApi = retrofit.create(LingvoApi.class);
 
-    //We need this to avoid >>>
     private static Gson init() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setLenient();

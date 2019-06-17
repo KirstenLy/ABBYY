@@ -43,6 +43,10 @@ public class ArticleNode {
         return nodeType;
     }
 
+    public void setInnerNodes(List<ArticleNode> innerNodes) {
+        this.innerNodes = innerNodes;
+    }
+
     public List<ArticleNode> getInnerNodes() {
         return innerNodes;
     }

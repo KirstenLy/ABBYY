@@ -34,11 +34,9 @@ public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
         ArrayList<String> history = storage.getHistory();
 
         if (history == null || history.isEmpty()) {
-            binding.txtHistoryEmpty.setVisibility(View.VISIBLE);
-            binding.rvHistory.setVisibility(View.GONE);
+            setEmptyHistoryState(true);
         } else {
-            binding.txtHistoryEmpty.setVisibility(View.GONE);
-            binding.rvHistory.setVisibility(View.VISIBLE);
+            setEmptyHistoryState(false);
             binding.rvHistory.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, true));
             historyAdapter = new HistoryAdapter(storage.getHistory());
             binding.rvHistory.setAdapter(historyAdapter);
@@ -48,7 +46,13 @@ public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
             storage.clearHistory();
             if (historyAdapter != null) {
                 historyAdapter.clearHistory();
+                setEmptyHistoryState(true);
             }
         });
+    }
+
+    private void setEmptyHistoryState(boolean state) {
+        binding.txtHistoryEmpty.setVisibility(state ? View.VISIBLE : View.GONE);
+        binding.rvHistory.setVisibility(state ? View.GONE : View.VISIBLE);
     }
 }
