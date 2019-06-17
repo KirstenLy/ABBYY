@@ -13,28 +13,23 @@
 
             <EditText
                 android:id="@+id/input_word"
+                style="@style/EditText.Default"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginStart="@dimen/margin_8"
                 android:layout_marginTop="@dimen/margin_16"
                 android:layout_marginEnd="@dimen/margin_8"
-                android:background="@drawable/background_edit_text_rounded"
-                android:gravity="center"
-                android:hint="@string/hint_insert_word"
-                android:padding="@dimen/padding_16" />
+                android:hint="@string/hint_insert_word" />
 
             <Button
                 android:id="@+id/btn_send"
+                style="@style/Button.Default"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_8"
                 android:layout_marginTop="@dimen/margin_8"
                 android:layout_marginEnd="@dimen/margin_8"
-                android:background="@drawable/background_edit_text_rounded"
-                android:foreground="?attr/selectableItemBackground"
-                android:gravity="center"
-                android:padding="@dimen/padding_16"
                 android:text="@string/main_btn_send_word" />
 
             <androidx.cardview.widget.CardView

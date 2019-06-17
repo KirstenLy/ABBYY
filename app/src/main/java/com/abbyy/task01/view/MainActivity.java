@@ -43,7 +43,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements M
 
         AbbyyApp.getInjector().inject(this);
         presenter.setView(this);
-        presenter.getBearedToken();
+        presenter.getBearedToken(getString(R.string.basic_api_key));
 
         binding.rvTranslation.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         binding.rvTranslation.setAdapter(translationAdapter);

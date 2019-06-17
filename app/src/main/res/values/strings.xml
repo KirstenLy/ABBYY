@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">ABBYY Test task</string>
+    <string name="basic_api_key">Basic M2YzZTQ0YmMtN2Y0NC00MmRkLWIxM2UtMmRhZDhlMTY3OTc1OmNmMWM4NzI1ZjgxZjQ2NThhZDExOTk3YWI4ZjAzMjQ1</string>
+
     <!-- MainActivity-->
     <!-- Activity -->
     <string name="main_btn_send_word">Получить перевод</string>

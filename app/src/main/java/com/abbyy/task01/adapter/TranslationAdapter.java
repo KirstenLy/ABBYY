@@ -14,8 +14,6 @@ import com.abbyy.task01.utils.AbbyyUtils;
 
 import java.util.ArrayList;
 
-import timber.log.Timber;
-
 import static com.abbyy.task01.utils.AbbyyUtils.TYPE_ABBREV;
 import static com.abbyy.task01.utils.AbbyyUtils.TYPE_LIST;
 import static com.abbyy.task01.utils.AbbyyUtils.TYPE_PARAGRAPH;
@@ -84,6 +82,7 @@ public class TranslationAdapter extends RecyclerView.Adapter<TranslationAdapter.
             for (ArticleNode innerNode : innerNodes) {
                 if (isNodeBelongToType(innerNode, TYPE_PARAGRAPH)) {
                     setTextViewFromParagraphNode(innerNode, builder, counter);
+                    counter++;
                 } else if (isNodeBelongToType(innerNode, TYPE_LIST)) {
                     ArrayList<ArticleNode> itemListInnerNodeList = (ArrayList<ArticleNode>) innerNode.getItems();
                     for (ArticleNode listItemNode : itemListInnerNodeList) {
@@ -101,12 +100,12 @@ public class TranslationAdapter extends RecyclerView.Adapter<TranslationAdapter.
                     return;
                 }
             }
+            if (counter != 0) {
+                builder.append(counter).append('.').append(" ");
+            }
             for (int i = 0; i < node.getInnerNodes().size(); i++) {
                 ArticleNode innerNode = node.getInnerNodes().get(i);
                 if (isNodeBelongToType(innerNode, AbbyyUtils.TYPE_TEXT) || isNodeBelongToType(innerNode, TYPE_ABBREV)) {
-                    if (counter != 0) {
-                        builder.append(counter).append('.').append(" ");
-                    }
                     builder.append(innerNode.getText());
                 }
             }

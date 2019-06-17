@@ -6,4 +6,21 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="EditText" />
+
+    <style name="EditText.Default">
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/background_edit_text_rounded</item>
+        <item name="android:padding">@dimen/padding_16</item>
+    </style>
+
+
+    <style name="Button" />
+
+    <style name="Button.Default">
+        <item name="android:background">@drawable/background_edit_text_rounded</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/padding_16</item>
+    </style>
 </resources>
