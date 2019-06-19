@@ -5,7 +5,11 @@ import android.content.Context;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-public class KeyboardUtils {
+public final class KeyboardUtils {
+
+    private KeyboardUtils() {
+        // This class is not publicly instantiable
+    }
 
     public static void hideSoftKeyboard(Activity activity) {
         View view = activity.getCurrentFocus();

@@ -12,7 +12,11 @@ import com.abbyy.task01.beans.ArticleNode;
 
 import java.util.ArrayList;
 
-public class AbbyyUtils {
+public final class AbbyyUtils {
+
+    private AbbyyUtils() {
+        // This class is not publicly instantiable
+    }
 
     public static String TYPE_COMMENT = "Comment";
     public static String TYPE_PARAGRAPH = "Paragraph";
