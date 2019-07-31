@@ -1,4 +1,4 @@
-package com.abbyy.task01.beans;
+package com.abbyy.task01.view.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

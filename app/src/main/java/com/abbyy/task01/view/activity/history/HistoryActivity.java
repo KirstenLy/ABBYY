@@ -1,4 +1,4 @@
-package com.abbyy.task01.view;
+package com.abbyy.task01.view.activity.history;
 
 import android.os.Bundle;
 import android.view.View;
@@ -10,7 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.abbyy.task01.AbbyyApp;
 import com.abbyy.task01.R;
 import com.abbyy.task01.Storage;
-import com.abbyy.task01.adapter.HistoryAdapter;
+import com.abbyy.task01.view.activity.BaseActivity;
+import com.abbyy.task01.view.adapter.HistoryAdapter;
 import com.abbyy.task01.databinding.ActivityHistoryBinding;
 
 import java.util.ArrayList;

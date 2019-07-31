@@ -1,4 +1,4 @@
-package com.abbyy.task01.adapter;
+package com.abbyy.task01.view.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,15 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.abbyy.task01.R;
-import com.abbyy.task01.beans.ArticleNode;
-import com.abbyy.task01.utils.AbbyyUtils;
+import com.abbyy.task01.view.model.ArticleNode;
+import com.abbyy.task01.AbbyyUtils;
 
 import java.util.ArrayList;
 
-import static com.abbyy.task01.utils.AbbyyUtils.TYPE_ABBREV;
-import static com.abbyy.task01.utils.AbbyyUtils.TYPE_LIST;
-import static com.abbyy.task01.utils.AbbyyUtils.TYPE_PARAGRAPH;
-import static com.abbyy.task01.utils.AbbyyUtils.isNodeBelongToType;
+import static com.abbyy.task01.AbbyyUtils.TYPE_ABBREV;
+import static com.abbyy.task01.AbbyyUtils.TYPE_LIST;
+import static com.abbyy.task01.AbbyyUtils.TYPE_PARAGRAPH;
+import static com.abbyy.task01.AbbyyUtils.isNodeBelongToType;
 
 public class TranslationAdapter extends RecyclerView.Adapter<TranslationAdapter.TranslationVH> {
     private ArrayList<ArticleNode> contentNode = new ArrayList<>();

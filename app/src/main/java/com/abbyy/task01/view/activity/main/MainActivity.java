@@ -1,4 +1,4 @@
-package com.abbyy.task01.view;
+package com.abbyy.task01.view.activity.main;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,21 +12,25 @@ import android.view.View;
 
 import com.abbyy.task01.AbbyyApp;
 import com.abbyy.task01.R;
-import com.abbyy.task01.adapter.TranslationAdapter;
-import com.abbyy.task01.beans.ArticleModel;
-import com.abbyy.task01.beans.ArticleNode;
+import com.abbyy.task01.view.activity.BaseActivity;
+import com.abbyy.task01.view.activity.history.HistoryActivity;
+import com.abbyy.task01.view.adapter.TranslationAdapter;
+import com.abbyy.task01.view.model.ArticleModel;
+import com.abbyy.task01.view.model.ArticleNode;
 import com.abbyy.task01.contract.MainActivityContract;
 import com.abbyy.task01.databinding.ActivityMainBinding;
 import com.abbyy.task01.presenter.MainActivityPresenter;
-import com.abbyy.task01.utils.AbbyyUtils;
+import com.abbyy.task01.AbbyyUtils;
 import com.abbyy.task01.utils.KeyboardUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import static com.abbyy.task01.utils.AbbyyUtils.fillTopParagraphLayout;
-import static com.abbyy.task01.utils.AbbyyUtils.isNodeBelongToType;
+import static com.abbyy.task01.AbbyyUtils.fillTopParagraphLayout;
+import static com.abbyy.task01.AbbyyUtils.isNodeBelongToType;
 import static com.abbyy.task01.utils.ValidationUtils.isAlpha;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> implements MainActivityContract {
@@ -34,7 +38,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements M
     @Inject
     MainActivityPresenter presenter;
 
-    private TranslationAdapter translationAdapter = new TranslationAdapter(new ArrayList<>());
+    private TranslationAdapter translationAdapter = new TranslationAdapter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +129,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements M
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NotNull MenuItem item) {
         if (item.getItemId() == R.id.menu_history) {
             Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
             startActivity(intent);

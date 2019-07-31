@@ -1,4 +1,4 @@
-package com.abbyy.task01.network;
+package com.abbyy.task01.data.network;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;

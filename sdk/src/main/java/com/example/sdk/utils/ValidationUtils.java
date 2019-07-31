@@ -1,4 +1,4 @@
-package com.abbyy.task01.utils;
+package com.example.sdk.utils;
 
 public final class ValidationUtils {
 

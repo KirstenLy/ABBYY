@@ -1,4 +1,6 @@
-package com.abbyy.task01.presenter;
+package com.abbyy.task01.view.activity.main;
+
+import androidx.lifecycle.ViewModel;
 
 import com.abbyy.task01.Storage;
 import com.abbyy.task01.contract.MainActivityContract;
@@ -10,23 +12,20 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
-public class MainActivityPresenter {
+public class MainActivityViewModel extends ViewModel {
+
     private String LANG_SOURCE = "1033";
     private String LANG_TARGET = "1049";
     private String DICTIONARY = "LingvoUniversal (En-Ru)";
-
-    @Inject
-    public MainActivityPresenter(LingvoApi api, Storage storage) {
-        this.api = api;
-        this.storage = storage;
-    }
 
     private MainActivityContract view;
     private LingvoApi api;
     private Storage storage;
 
-    public void setView(MainActivityContract view) {
-        this.view = view;
+    @Inject
+    public MainActivityViewModel(LingvoApi api, Storage storage) {
+        this.api = api;
+        this.storage = storage;
     }
 
     public void getBearedToken(String apiKey) {
@@ -57,7 +56,4 @@ public class MainActivityPresenter {
 
     }
 
-    public void removeView() {
-        this.view = null;
-    }
 }

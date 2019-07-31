@@ -1,6 +1,6 @@
-package com.abbyy.task01.network;
+package com.abbyy.task01.data.network;
 
-import com.abbyy.task01.beans.ArticleModel;
+import com.abbyy.task01.view.model.ArticleModel;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;

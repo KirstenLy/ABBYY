@@ -1,4 +1,4 @@
-package com.abbyy.task01.utils;
+package com.abbyy.task01;
 
 import android.content.Context;
 import android.widget.ImageView;
@@ -7,8 +7,7 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
-import com.abbyy.task01.R;
-import com.abbyy.task01.beans.ArticleNode;
+import com.abbyy.task01.view.model.ArticleNode;
 
 import java.util.ArrayList;
 

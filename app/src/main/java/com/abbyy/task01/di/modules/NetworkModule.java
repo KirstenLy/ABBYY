@@ -3,8 +3,8 @@ package com.abbyy.task01.di.modules;
 import android.content.Context;
 
 import com.abbyy.task01.Storage;
-import com.abbyy.task01.network.LingvoApi;
-import com.abbyy.task01.network.UnsafeOkHttpClient;
+import com.abbyy.task01.data.network.LingvoApi;
+import com.abbyy.task01.data.network.UnsafeOkHttpClient;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -71,7 +71,6 @@ public class NetworkModule {
             .client(client)
             .build();
 
-    private LingvoApi lingvoApi = retrofit.create(LingvoApi.class);
 
     private static Gson init() {
         GsonBuilder gsonBuilder = new GsonBuilder();
@@ -80,8 +79,8 @@ public class NetworkModule {
     }
 
     @Provides
-    @Singleton
     LingvoApi providesLingvoApi() {
         return lingvoApi;
     }
+    private LingvoApi lingvoApi = retrofit.create(LingvoApi.class);
 }

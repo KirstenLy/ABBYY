@@ -1,4 +1,4 @@
-package com.abbyy.task01.adapter;
+package com.abbyy.task01.view.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;

@@ -1,6 +1,6 @@
 package com.abbyy.task01.contract;
 
-import com.abbyy.task01.beans.ArticleModel;
+import com.abbyy.task01.view.model.ArticleModel;
 
 public interface MainActivityContract {
     void setLoadingState(boolean state);
