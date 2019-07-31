@@ -1,6 +1,5 @@
 package com.abbyy.task01.view;
 
-
 import android.os.Bundle;
 import android.view.View;
 
@@ -21,7 +20,6 @@ import javax.inject.Inject;
 public class HistoryActivity extends BaseActivity<ActivityHistoryBinding> {
 
     @Inject Storage storage;
-
     private HistoryAdapter historyAdapter;
 
     @Override

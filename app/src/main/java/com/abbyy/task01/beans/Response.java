@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 
 public class Response {
     @Expose
-    ArticleModel[] models;
+    private ArticleModel[] models;
 
     public ArticleModel[] getModels() {
         return models;

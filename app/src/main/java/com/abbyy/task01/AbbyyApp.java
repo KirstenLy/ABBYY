@@ -3,7 +3,6 @@ package com.abbyy.task01;
 import android.app.Application;
 
 import com.abbyy.task01.di.AppComponent;
-import com.abbyy.task01.di.DaggerAppComponent;
 import com.abbyy.task01.di.modules.AppModule;
 import com.abbyy.task01.di.modules.NetworkModule;
 

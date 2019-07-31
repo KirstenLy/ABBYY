@@ -19,13 +19,8 @@ import static com.abbyy.task01.utils.AbbyyUtils.TYPE_LIST;
 import static com.abbyy.task01.utils.AbbyyUtils.TYPE_PARAGRAPH;
 import static com.abbyy.task01.utils.AbbyyUtils.isNodeBelongToType;
 
-
 public class TranslationAdapter extends RecyclerView.Adapter<TranslationAdapter.TranslationVH> {
-    private ArrayList<ArticleNode> contentNode;
-
-    public TranslationAdapter(ArrayList<ArticleNode> contentNode) {
-        this.contentNode = contentNode;
-    }
+    private ArrayList<ArticleNode> contentNode = new ArrayList<>();
 
     @NonNull
     @Override
