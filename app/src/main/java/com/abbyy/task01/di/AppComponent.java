@@ -7,11 +7,13 @@ import com.abbyy.task01.view.activity.history.HistoryActivity;
 import com.abbyy.task01.view.activity.main.MainActivity;
 
 import javax.inject.Singleton;
-
 import dagger.Component;
 
 @Singleton
-@Component(modules = {PresenterModule.class, NetworkModule.class, AppModule.class})
+@Component(modules = {
+        PresenterModule.class,
+        NetworkModule.class,
+        AppModule.class})
 public interface AppComponent {
     void inject(MainActivity mainActivity);
 

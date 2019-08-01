@@ -13,14 +13,12 @@ import dagger.Provides;
 @Module
 public class AppModule {
     private AbbyyApp appContext;
-    private Storage storage;
 
     public AppModule(AbbyyApp context) {
         appContext = context;
     }
 
     @Provides
-    @Singleton
     Context provideContext() {
         return appContext;
     }
