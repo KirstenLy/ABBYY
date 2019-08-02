@@ -1,10 +1,12 @@
 package com.abbyy.task01.view.activity.main;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.abbyy.task01.Storage;
-import com.abbyy.task01.contract.MainActivityContract;
 import com.abbyy.task01.data.network.LingvoApi;
+import com.abbyy.task01.view.model.ArticleModel;
+import com.example.sdk.models.AbbyyError;
 
 import javax.inject.Inject;
 
@@ -18,9 +20,14 @@ public class MainActivityViewModel extends ViewModel {
     private String LANG_TARGET = "1049";
     private String DICTIONARY = "LingvoUniversal (En-Ru)";
 
-    private MainActivityContract view;
     private LingvoApi api;
     private Storage storage;
+
+    MutableLiveData<Boolean> loadingStateLiveData = new MutableLiveData<>();
+    MutableLiveData<Boolean> nothingFoundStateLiveData = new MutableLiveData<>();
+    MutableLiveData<ArticleModel> responseDataLiveData = new MutableLiveData<>();
+
+    MutableLiveData<AbbyyError> responseErrorLiveData = new MutableLiveData<>();
 
     @Inject
     public MainActivityViewModel(LingvoApi api, Storage storage) {
@@ -28,32 +35,36 @@ public class MainActivityViewModel extends ViewModel {
         this.storage = storage;
     }
 
-    public void getBearedToken(String apiKey) {
+    void getBearedToken(String apiKey) {
         api.get(apiKey)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(token -> storage.setBearerToken(token), Timber::e);
-
+                .subscribe(token -> storage.setBearerToken(token), e -> {
+                    AbbyyError error = new AbbyyError();
+                    error.setMessage(e.getLocalizedMessage());
+                    responseErrorLiveData.setValue(error);
+//                   Timber.e("MEEEEEEE: 0" + e.getLocalizedMessage() + " 1" + e.getMessage() + " 2" + e.getCause());
+                });
     }
 
-    public void translate(String text) {
-        view.setLoadingState(true);
+    void translate(String text) {
+        loadingStateLiveData.setValue(true);
         api.translate(text, DICTIONARY, LANG_SOURCE, LANG_TARGET)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> {
                     if (result != null) {
-                        view.setNothingFoundedState(false);
-                        view.onDataReady(result);
+                        nothingFoundStateLiveData.setValue(false);
+                        loadingStateLiveData.setValue(false);
+
+                        responseDataLiveData.setValue(result);
                         storage.addWordToHistory(text.trim());
-                        view.setLoadingState(false);
                     }
                 }, e -> {
                     Timber.e(e);
-                    view.setNothingFoundedState(true);
-                    view.setLoadingState(false);
+                    nothingFoundStateLiveData.setValue(true);
+                    loadingStateLiveData.setValue(false);
                 });
 
     }
-
 }

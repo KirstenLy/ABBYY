@@ -1,6 +1,7 @@
 package com.abbyy.task01.view.activity.main;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,16 +13,17 @@ import android.view.View;
 
 import com.abbyy.task01.AbbyyApp;
 import com.abbyy.task01.R;
+import com.abbyy.task01.di.ViewModelFactory;
 import com.abbyy.task01.view.activity.BaseActivity;
 import com.abbyy.task01.view.activity.history.HistoryActivity;
 import com.abbyy.task01.view.adapter.TranslationAdapter;
+import com.abbyy.task01.view.dialog.ErrorDialog;
 import com.abbyy.task01.view.model.ArticleModel;
 import com.abbyy.task01.view.model.ArticleNode;
-import com.abbyy.task01.contract.MainActivityContract;
 import com.abbyy.task01.databinding.ActivityMainBinding;
-import com.abbyy.task01.presenter.MainActivityPresenter;
 import com.abbyy.task01.AbbyyUtils;
-import com.abbyy.task01.utils.KeyboardUtils;
+import com.example.sdk.models.AbbyyError;
+import com.example.sdk.utils.KeyboardUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -29,15 +31,17 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 import static com.abbyy.task01.AbbyyUtils.fillTopParagraphLayout;
 import static com.abbyy.task01.AbbyyUtils.isNodeBelongToType;
-import static com.abbyy.task01.utils.ValidationUtils.isAlpha;
+import static com.example.sdk.utils.ValidationUtils.isAlpha;
 
-public class MainActivity extends BaseActivity<ActivityMainBinding> implements MainActivityContract {
+public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
-    @Inject
-    MainActivityPresenter presenter;
+    @Inject ViewModelFactory factoryVM;
 
+    private MainActivityViewModel viewModel;
     private TranslationAdapter translationAdapter = new TranslationAdapter();
 
     @Override
@@ -46,8 +50,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements M
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         AbbyyApp.getInjector().inject(this);
-        presenter.setView(this);
-        presenter.getBearedToken(getString(R.string.basic_api_key));
+        viewModel = ViewModelProviders.of(this,factoryVM).get(MainActivityViewModel.class);
+        viewModel.getBearedToken(getString(R.string.basic_api_key));
 
         binding.rvTranslation.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         binding.rvTranslation.setAdapter(translationAdapter);
@@ -55,18 +59,21 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements M
         binding.btnSend.setOnClickListener(v -> {
             String inputWord = binding.inputWord.getText().toString();
             if (wordValidation(inputWord)) {
-                presenter.translate(inputWord);
+                viewModel.translate(inputWord);
             }
             KeyboardUtils.hideSoftKeyboard(this);
         });
+
+        viewModel.loadingStateLiveData.observe(this, this::setProgressState);
+        viewModel.nothingFoundStateLiveData.observe(this,this::setNothingFoundedState);
+        viewModel.responseDataLiveData.observe(this,this::onDataReady);
+        viewModel.responseErrorLiveData.observe(this,this::showOnErrorDialog);
     }
 
-    @Override
-    public void setLoadingState(boolean state) {
+    public void setProgressState(boolean state) {
         binding.progress.setVisibility(state ? View.VISIBLE : View.GONE);
     }
 
-    @Override
     public void setNothingFoundedState(boolean state) {
         binding.txtEmptyStub.setVisibility(View.GONE);
 
@@ -74,7 +81,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements M
         binding.lytContent.setVisibility(state ? View.GONE : View.VISIBLE);
     }
 
-    @Override
+    public void showOnErrorDialog(AbbyyError error){
+        ErrorDialog errorDialog = ErrorDialog.getInstance(error.getMessage());
+        errorDialog.show(getSupportFragmentManager(),"errorTag");
+    }
+
     public void onDataReady(ArticleModel modelList) {
         binding.txtEmptyStub.setVisibility(View.GONE);
 
@@ -135,11 +146,5 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements M
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        presenter.removeView();
     }
 }

@@ -23,4 +23,14 @@
         <item name="android:gravity">center</item>
         <item name="android:padding">@dimen/padding_16</item>
     </style>
+
+    <style name="Dialog"/>
+    <style name="Dialog.DialogFragment" parent="android:Theme.Dialog">
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowMinWidthMajor">85%</item>
+        <item name="android:windowMinWidthMinor">75%</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
 </resources>

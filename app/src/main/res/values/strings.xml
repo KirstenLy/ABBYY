@@ -8,9 +8,7 @@
     <!-- Card -->
     <string name="main_card_stub">Перевод вашего слова появится здесь</string>
     <string name="main_card_empty">По вашему запросу ничего не найдено</string>
-
     <string name="main_card_position">%d.</string>
-
     <!-- HistoryActivity -->
     <string name="history_empty">Поисковая история пуста</string>
     <string name="history_clean">Очистить историю</string>
@@ -25,4 +23,9 @@
     <!-- Menu -->
     <!-- Toolbar -->
     <string name="menu_toolbar_history">История запросов</string>
+
+    <!-- Dialogs-->
+    <!-- ErrorDialog -->
+    <string name="dialogs_error_network_connection">Во время запроса произошла ошибка:\n\n%s\n\nПопробуйте повторить запрос через 15 минут</string>
+    <string name="dialogs_error_network_connection_exit">Завершить работу приложения</string>
 </resources>

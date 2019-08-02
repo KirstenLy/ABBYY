@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_dialog_error"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txt_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="@dimen/padding_8"
+        android:textColor="@android:color/black"
+        tools:text="ErrorText" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_close_app"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_4"
+        android:padding="@dimen/padding_8"
+        android:text="@string/dialogs_error_network_connection_exit" />
+
+</LinearLayout>
