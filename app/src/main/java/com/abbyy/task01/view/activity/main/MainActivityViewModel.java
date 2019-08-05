@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 import com.abbyy.task01.Storage;
 import com.abbyy.task01.data.network.LingvoApi;
 import com.abbyy.task01.view.model.ArticleModel;
+import com.example.sdk.core.NetworkHelper;
 import com.example.sdk.models.AbbyyError;
 
 import javax.inject.Inject;
@@ -22,6 +23,7 @@ public class MainActivityViewModel extends ViewModel {
 
     private LingvoApi api;
     private Storage storage;
+    private NetworkHelper networkHelper;
 
     MutableLiveData<Boolean> loadingStateLiveData = new MutableLiveData<>();
     MutableLiveData<Boolean> nothingFoundStateLiveData = new MutableLiveData<>();
@@ -30,25 +32,33 @@ public class MainActivityViewModel extends ViewModel {
     MutableLiveData<AbbyyError> responseErrorLiveData = new MutableLiveData<>();
 
     @Inject
-    public MainActivityViewModel(LingvoApi api, Storage storage) {
+    public MainActivityViewModel(LingvoApi api, Storage storage, NetworkHelper networkHelper) {
         this.api = api;
         this.storage = storage;
+        this.networkHelper = networkHelper;
     }
 
     void getBearedToken(String apiKey) {
+        if (!networkHelper.isInternetAvailable()) {
+            responseErrorLiveData.setValue(new AbbyyError(AbbyyError.ErrorType.INTERNET_NO_AVIALABLE));
+            return;
+        }
         api.get(apiKey)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(token -> storage.setBearerToken(token), e -> {
-                    AbbyyError error = new AbbyyError();
-                    error.setMessage(e.getLocalizedMessage());
+                    AbbyyError error = new AbbyyError(AbbyyError.ErrorType.SERVER_NO_RESPONSE);
                     responseErrorLiveData.setValue(error);
-//                   Timber.e("MEEEEEEE: 0" + e.getLocalizedMessage() + " 1" + e.getMessage() + " 2" + e.getCause());
                 });
     }
 
     void translate(String text) {
         loadingStateLiveData.setValue(true);
+        if (!networkHelper.isInternetAvailable()) {
+            responseErrorLiveData.setValue(new AbbyyError(AbbyyError.ErrorType.INTERNET_NO_AVIALABLE));
+            loadingStateLiveData.setValue(false);
+            return;
+        }
         api.translate(text, DICTIONARY, LANG_SOURCE, LANG_TARGET)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -62,6 +72,8 @@ public class MainActivityViewModel extends ViewModel {
                     }
                 }, e -> {
                     Timber.e(e);
+                    AbbyyError error = new AbbyyError(AbbyyError.ErrorType.SERVER_NO_RESPONSE);
+                    responseErrorLiveData.setValue(error);
                     nothingFoundStateLiveData.setValue(true);
                     loadingStateLiveData.setValue(false);
                 });

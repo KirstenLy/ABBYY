@@ -1,22 +1,19 @@
 package com.example.sdk.models;
 
 public class AbbyyError {
-    private int code;
-    private String message;
 
-    public int getCode() {
-        return code;
+    public enum ErrorType{
+        INTERNET_NO_AVIALABLE,
+        SERVER_NO_RESPONSE
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    private ErrorType errorType;
+
+    public AbbyyError(ErrorType errorType) {
+        this.errorType = errorType;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
+    public ErrorType getErrorType() {
+        return errorType;
     }
 }

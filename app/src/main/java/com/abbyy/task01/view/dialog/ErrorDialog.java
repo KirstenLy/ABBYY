@@ -67,9 +67,7 @@ public class ErrorDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         if (getActivity() != null) {
-            Dialog dialog = new Dialog(getActivity(), R.style.Dialog_DialogFragment);
-            dialog.setCancelable(false);
-            return dialog;
+            return new Dialog(getActivity(), R.style.Dialog_DialogFragment);
         } else {return super.onCreateDialog(savedInstanceState);}
     }
 }

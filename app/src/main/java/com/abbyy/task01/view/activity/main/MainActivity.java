@@ -31,8 +31,6 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import timber.log.Timber;
-
 import static com.abbyy.task01.AbbyyUtils.fillTopParagraphLayout;
 import static com.abbyy.task01.AbbyyUtils.isNodeBelongToType;
 import static com.example.sdk.utils.ValidationUtils.isAlpha;
@@ -50,7 +48,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         AbbyyApp.getInjector().inject(this);
-        viewModel = ViewModelProviders.of(this,factoryVM).get(MainActivityViewModel.class);
+        viewModel = ViewModelProviders.of(this, factoryVM).get(MainActivityViewModel.class);
         viewModel.getBearedToken(getString(R.string.basic_api_key));
 
         binding.rvTranslation.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
@@ -65,9 +63,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         });
 
         viewModel.loadingStateLiveData.observe(this, this::setProgressState);
-        viewModel.nothingFoundStateLiveData.observe(this,this::setNothingFoundedState);
-        viewModel.responseDataLiveData.observe(this,this::onDataReady);
-        viewModel.responseErrorLiveData.observe(this,this::showOnErrorDialog);
+        viewModel.nothingFoundStateLiveData.observe(this, this::setNothingFoundedState);
+        viewModel.responseDataLiveData.observe(this, this::onDataReady);
+        viewModel.responseErrorLiveData.observe(this, this::showOnErrorDialog);
     }
 
     public void setProgressState(boolean state) {
@@ -81,9 +79,22 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         binding.lytContent.setVisibility(state ? View.GONE : View.VISIBLE);
     }
 
-    public void showOnErrorDialog(AbbyyError error){
-        ErrorDialog errorDialog = ErrorDialog.getInstance(error.getMessage());
-        errorDialog.show(getSupportFragmentManager(),"errorTag");
+    public void showOnErrorDialog(AbbyyError error) {
+        String errorMessage;
+
+        switch (error.getErrorType()) {
+            case INTERNET_NO_AVIALABLE:
+                errorMessage = getString(R.string.error_network_no_avialable);
+                break;
+            case SERVER_NO_RESPONSE:
+                errorMessage = getString(R.string.error_network_server_no_response);
+                break;
+            default:
+                errorMessage = "Unknown";
+        }
+
+        ErrorDialog errorDialog = ErrorDialog.getInstance(errorMessage);
+        errorDialog.show(getSupportFragmentManager(), "errorTag");
     }
 
     public void onDataReady(ArticleModel modelList) {

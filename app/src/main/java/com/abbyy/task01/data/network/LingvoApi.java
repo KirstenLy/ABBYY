@@ -12,7 +12,7 @@ import retrofit2.http.Query;
 public interface LingvoApi {
 
     @Headers("Content-Type: application/json")
-    @POST("api/v1.1/authenti1cate")
+    @POST("api/v1.1/authenticate")
     Single<String> get(@Header("Authorization") String value);
 
     @GET("api/v1/Article")

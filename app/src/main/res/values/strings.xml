@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">ABBYY Test task</string>
-    <string name="basic_api_key">Basic M2YzZTQ0YmMtN2Y0NC00MmRkLWIxM2UtMmRhZDhlMTY3OTc1OmNmMWM4NzI1ZjgxZjQ2NThhZDExOTk3YWI4ZjAzMjQ1</string>
+    <string name="basic_api_key">Basic ZGRjYTgwYjctODUzMC00ODZlLWJiNWItM2E2MWMwZmFmOTdjOjU5N2YxODE2Y2UwNDQzM2I5MDZlM2ZmM2NiY2ZkMzU2</string>
 
     <!-- MainActivity-->
     <!-- Activity -->
@@ -19,6 +19,9 @@
     <!-- Errors -->
     <string name="error_input_empty">Строка не может быть пустой</string>
     <string name="error_input_alpha">Строка может содержать только символы алфавита a-z</string>
+
+    <string name="error_network_no_avialable">Отсутствует соединение с интернетом</string>
+    <string name="error_network_server_no_response">Сервер временно недоступен</string>
 
     <!-- Menu -->
     <!-- Toolbar -->

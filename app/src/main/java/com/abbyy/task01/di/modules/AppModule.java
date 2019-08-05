@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.abbyy.task01.AbbyyApp;
 import com.abbyy.task01.Storage;
+import com.example.sdk.core.NetworkHelper;
 
 import javax.inject.Singleton;
 
@@ -27,5 +28,10 @@ public class AppModule {
     @Singleton
     Storage provideStorage(Context appContext) {
         return new Storage(appContext);
+    }
+
+    @Provides
+    NetworkHelper provideNetworkHelper(Context appContext) {
+        return new NetworkHelper(appContext);
     }
 }
